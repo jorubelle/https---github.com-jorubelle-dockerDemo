@@ -1,15 +1,18 @@
 FROM node:slim
 
+
+
+# set directory "cd /app"
 WORKDIR /app
 
-COPY package*.json ./
+# install npm dependencies
+COPY package.json /app/package.json
+RUN npm install
 
+# copy code
+COPY index.js /app/index.js
+COPY package.json /app/package.json
 RUN npm install 
 
-COPY . . 
-
-ENV PORT=8080
-
-EXPOSE 8080
-
-CMD [ "npm", "start" ]
+# the program to run
+ENTRYPOINT [ "npm", "start" ]
